@@ -7,4 +7,4 @@ var userSchema = baseSchema.extend({
 	Password : {type: String}
 })
 
-exports.userModel = db.model('user', userSchema);
+exports.userModel = db.model('user',userSchema,'user');
