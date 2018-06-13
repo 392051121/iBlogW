@@ -35,7 +35,7 @@
 			    		if(result.data.err){
 			    			alert(result.data.err);
 			    		}else{
-			    			_this.$router.push({path:""});
+			    			_this.$router.push({path:"/backManager"});
 			    		}
 			    	}
 			    ).catch(
