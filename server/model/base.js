@@ -5,8 +5,8 @@ var baseSchema = new db.Schema({
     //唯一键
     //_id: {type: String, unique: true},
     //创建时间
-    CreateTime: {type: Date},
+    CreateTime: {type: String},
     //修改时间
-    ModifyTime: {type: Date}
+    ModifyTime: {type: String}
 });
 exports.baseSchema = baseSchema;

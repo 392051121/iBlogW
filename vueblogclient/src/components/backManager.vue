@@ -21,7 +21,7 @@
                         <span>统计报表</span>
                     </router-link>
                 </li>
-                <li class="">
+                <li class="now">
                     <router-link to="#">
                         <i class="fa fa-user-o" aria-hidden="true"></i>
                         <span>管理员管理</span>

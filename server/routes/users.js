@@ -26,4 +26,18 @@ router.post('/login',function(req, res, next){
 	     }
 	 })
 });
+router.post('/userList',function(req, res, next){
+	var page = req.body.page;
+	userService.findByPage(page,function(err,data){
+		if(data.userList.length !== 0){
+			var obj = {
+				userList:data.userList,
+				count:data.count,
+				success:"true"
+			};
+			var str = JSON.stringify(obj);
+      res.end(str);
+		}
+	});
+});
 module.exports = router;
