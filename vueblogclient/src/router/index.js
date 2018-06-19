@@ -19,7 +19,7 @@ export default new Router({
     	component:backManager,
     	children:[
     	    {
-              path: 'userList', //课程列表
+              path: 'userList', 
               component: userList
           }
     	]

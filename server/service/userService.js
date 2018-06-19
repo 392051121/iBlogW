@@ -38,5 +38,23 @@ var findByPage = function(page, callback) {
 	});
 
 }
+var insertUser = function(username,password,callback){
+	var today = new Date();
+	today = today.getFullYear()+(today.getMonth()+1)+today.getDay();
+	var user = {
+		Username:username,
+		Password:password,
+		CreateTime:today,
+		ModifyTime:today
+	};
+	userModle.create(user,function(err,users){
+		if(err){
+			return callback(err);
+		}else {
+			return callback("","success");
+		}
+	});
+}
 exports.findOne = findOne;
 exports.findByPage = findByPage;
+exports.insertUser = insertUser;
