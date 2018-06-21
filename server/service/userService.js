@@ -1,5 +1,6 @@
 var db = require('../dbmanager/db');
 var userModle = require('../model/user').userModel;
+var dateFormat = require('../utils/dateFormat');
 
 var findOne = function(userName, callback) {
 	userModle.find({
@@ -39,8 +40,8 @@ var findByPage = function(page, callback) {
 
 }
 var insertUser = function(username,password,callback){
-	var today = new Date();
-	today = today.getFullYear()+(today.getMonth()+1)+today.getDay();
+	var today = dateFormat.format(new Date(),"YYYYMMDD");
+	//today = today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDay().toString();
 	var user = {
 		Username:username,
 		Password:password,

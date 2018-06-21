@@ -66,4 +66,22 @@ router.post('/add',function(req, res, next){
 		}
 	});
 });
+router.post('/search',function(req,res,next){
+	 var username = req.body.username;
+	 var password = req.body.password;
+	 if(username === ""){
+	 	   res.end('{"err":"用户名为空"}');
+	 }
+	 userService.findOne(username,function(err,data){
+	     if(err){
+	         res.end('{"error":err}');
+	     }else{
+	     	   if(data.length === 0){
+	     	   	   res.end('{"error":"没有此用户"}');
+	     	   }
+	     	   data = JSON.stringify(data);
+	     	   res.end(data);
+	     }
+	 });
+});
 module.exports = router;

@@ -4,8 +4,8 @@
             <input v-model="user.username" class="myinput" type="text" placeholder="用户名" />
             <input v-model="user.password" class="myinput" type="password" placeholder="密码" />
             <button  class="btn" @click="addUser"><i class="fa fa-plus" aria-hidden="true"></i>添加</button>
-            <button  class="btn" @click=""><i class="fa fa-save" aria-hidden="true"></i>保存</button>
-            <button style="opacity: 0.8;"  class="btn" @click=""><i class="fa fa fa-times-circle-o" aria-hidden="true"></i>取消</button>
+            <button  class="btn" @click="searchUser"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
+            <button style="opacity: 0.8;"  class="btn" @click="emptyUser"><i class="fa fa fa-times-circle-o" aria-hidden="true"></i>取消</button>
         </div>
         <grid 
             :listData="listData"
@@ -15,7 +15,7 @@
             :ifpage="true"
             :pageInfo="pageInfo"
             @on-delete="deleteAdmin"
-            @on-edit="editAdmin"
+            @on-edit="editUser"
             @on-gopage="gopage"
         ></grid>
   </div>
@@ -42,7 +42,7 @@
                     username:"",
                     password:"",
                 },
-                editAdminObj:null,  //用于存放正在编辑的用户
+                editUserObj:null,  //用于存放正在编辑的用户
                 pageInfo:{}
             }
         },
@@ -65,7 +65,7 @@
                 }).catch(function (error) {
                     //失败
                     _this.$router.push({path:"/"});
-                    console.log(error)
+                    console.log(error);
                 });
             },
             addUser(){ //添加用户
@@ -76,20 +76,38 @@
                 this.$reqs.post('/users/add',this.user)
                 .then((result)=>{
                     //成功
-                    this.getUserList(1);
-                    this.emptyUser();
+                    this.pageInfo.current = this.pageInfo.allpage;
+                    this.getUserList(this.pageInfo.allpage);
+                    this.emptyUser();  
                 }).catch(function (error) {
                     //失败
-                    console.log(error)
+                    console.log(error);
                 });
                 
             },
-            editAdmin(item){ //编辑用户
-                this.editAdminObj = item;
-                this.Admin = JSON.parse(JSON.stringify(item));
+            searchUser(){
+            	var _this = this;
+            	if(!this.user.username){
+                    alert("不能为空");
+                    return false;
+                }
+            	this.$reqs.post('/users/search',this.user
+               ).then((result)=>{
+            		_this.listData = result.data;
+                    //_this.pageInfo.allpage = Math.ceil( result.data.length/5 );
+            		this.emptyUser();
+                }).catch(function(error){
+            		console.log(error);
+                });
             },
-            saveEditAdmin(){
-                if(!this.Admin.name || !this.Admin.phone){
+            editUser(item){ //编辑用户
+                this.editUserObj = item;
+                this.user.username = item["Username"];
+                this.user.password = item["Password"];
+                //this.user = JSON.parse(JSON.stringify(item));
+            },
+            saveEditUser(){
+                if(!this.user.username || !this.Admin.phone){
                     alert("不能为空");
                     return false;
                 }
@@ -98,18 +116,15 @@
                     //成功
                     this.gopage(this.pageInfo.current);
                     
-                    this.editAdminObj = null;
+                    this.editUserObj = null;
                     this.emptyAdmin();
                 }).catch(function (error) {
                     //失败
                 console.log(error)
-                });
-                
-                
-                
+                });     
             },
             cancelEditAdmin(){
-                this.editAdminObj = null;
+                this.editUserObj = null;
                 this.emptyAdmin();
             },
             emptyUser(){ //清空输入框（多次使用，所以封装到这里）
@@ -130,8 +145,7 @@
             gopage(index){
                 this.pageInfo.current = index;
                 //查询数据
-                this.getUserList(index)
-                
+                this.getUserList(index) 
             }
         },
         components:{grid}
