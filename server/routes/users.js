@@ -40,7 +40,8 @@ router.post('/userList',function(req,res,next){
 
 router.post('/userList',function(req, res, next){
 	var page = req.body.page;
-	userService.findByPage(page,function(err,data){
+	var name = req.body.username;
+	userService.findByPage(page,name,function(err,data){
 		if(err){
 			res.end('{"err":err}');
 		}
@@ -80,6 +81,23 @@ router.post('/search',function(req,res,next){
 	     	   	   res.end('{"error":"没有此用户"}');
 	     	   }
 	     	   data = JSON.stringify(data);
+	     	   res.end(data);
+	     }
+	 });
+});
+router.post('/update',function(req,res,next){
+	 var id = req.body.id;
+	 var username = req.body.username;
+	 var password = req.body.password;
+	 if(username === ""){
+	 	   res.end('{"err":"用户名为空"}');
+	 }
+	 userService.update(id,username,password,function(err,data){
+	     if(err){
+	         res.end('{"error":err}');
+	     }else{
+	     	   data = JSON.stringify(data);
+	     	   console.log(data);
 	     	   res.end(data);
 	     }
 	 });

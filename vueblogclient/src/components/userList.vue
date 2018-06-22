@@ -1,10 +1,12 @@
 <template>
 	<div class="userList main">
     <div class="input_box">
+    	    <input v-model="user.id" class="" type="hidden"/>
             <input v-model="user.username" class="myinput" type="text" placeholder="用户名" />
             <input v-model="user.password" class="myinput" type="password" placeholder="密码" />
             <button  class="btn" @click="addUser"><i class="fa fa-plus" aria-hidden="true"></i>添加</button>
-            <button  class="btn" @click="searchUser"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
+            <button  class="btn" @click="saveEditUser"><i class="fa fa-save" aria-hidden="true"></i>保存</button>
+            <button  class="btn" @click="getUserList(1)"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
             <button style="opacity: 0.8;"  class="btn" @click="emptyUser"><i class="fa fa fa-times-circle-o" aria-hidden="true"></i>取消</button>
         </div>
         <grid 
@@ -39,8 +41,9 @@
                 listData:[],
                 theadData:theadData,
                 user:{ //用户信息
+                    id:"",
                     username:"",
-                    password:"",
+                    password:""
                 },
                 editUserObj:null,  //用于存放正在编辑的用户
                 pageInfo:{}
@@ -52,8 +55,12 @@
         methods:{
             getUserList(page){
                 var _this = this;
+                if(this.user.username === null){
+                    this.user.username = "";
+                }
                 this.$reqs.post('/users/userList',{
-                    page:page
+                    page:page,
+                    username : this.user.username
                 }).then(function(result){ 
                     //成功
                     if(result.data.success === "err"){
@@ -102,22 +109,25 @@
             },
             editUser(item){ //编辑用户
                 this.editUserObj = item;
+                this.user.id = item["_id"];
                 this.user.username = item["Username"];
                 this.user.password = item["Password"];
                 //this.user = JSON.parse(JSON.stringify(item));
             },
             saveEditUser(){
-                if(!this.user.username || !this.Admin.phone){
+            	var _this = this;
+                if(!this.user.username || !this.user.password){
                     alert("不能为空");
                     return false;
                 }
-                this.$reqs.post('/users/update', this.Admin)
+                this.$reqs.post('/users/update', this.user)
                 .then((result)=>{
                     //成功
-                    this.gopage(this.pageInfo.current);
-                    
-                    this.editUserObj = null;
-                    this.emptyAdmin();
+                    _this.emptyUser();
+                    _this.listData = result.data;
+            		_this.pageInfo.allpage = 1;
+                    //this.gopage(this.pageInfo.current);
+                    _this.editUserObj = null;
                 }).catch(function (error) {
                     //失败
                 console.log(error)
