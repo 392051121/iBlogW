@@ -22,13 +22,13 @@
                     </router-link>
                 </li>
                 <li class="now">
-                    <router-link to="#">
+                    <router-link to="/backManager/userList">
                         <i class="fa fa-user-o" aria-hidden="true"></i>
                         <span>管理员管理</span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="#">
+                    <router-link to="/backManager/catalogList">
                         <i class="fa fa-th-list" aria-hidden="true"></i>
                         <span>目录管理</span>
                     </router-link>
@@ -51,8 +51,7 @@
 		<div class="content">   
             <ul class="breadcrumb">
                 <li><a href="#">首页</a></li>
-               <!--
-                <li>{{pageTitle}}</li>-->
+                <li>{{pageTitle}}</li>
             </ul>
             <router-view></router-view>  
         </div>
@@ -61,17 +60,32 @@
 </template>
 
 <script>
+	var pageTitleObj = {
+        indexContent:"网站首页",
+        userList:"管理员管理",
+        catalogList:"目录管理"
+    };
 	export default {
 		name:'backManager',
 		data () {
 	        return {
 	            search_box_fouce:false,
-	            showExit:false
+	            showExit:false,
+	            pageTitle: pageTitleObj[ this.$route.path.substr( this.$route.path.lastIndexOf("/")+1 ) ] || "网站首页"
+
 	        }
         },
         methods:{
         	toggleSlide(){ //这个是用来显示和隐藏头像旁的退出下拉框
                 this.showExit = !this.showExit;
+            }
+        },
+        watch:{ //监控路径变化  当路径发送变化的时候，改变面包屑导航的显示
+            $route: {
+                handler: function (val, oldVal) {
+                    var path = val.path;
+                    this.pageTitle = pageTitleObj[path.substr( path.lastIndexOf("/")+1 ) ] || "网站首页";
+                }
             }
         }
 	}

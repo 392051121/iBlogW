@@ -102,4 +102,15 @@ router.post('/update',function(req,res,next){
 	     }
 	 });
 });
+router.post('/delete',function(req,res,next){
+	var id = req.body.id;
+	console.log(id);
+	userService.deleteOne(id,function(err){
+		if(err){
+			res.end('{"error":err}');
+		}else{
+			res.end('{"success":"删除成功"}');
+		}
+	});
+});
 module.exports = router;
