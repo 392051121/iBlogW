@@ -31,7 +31,6 @@ router.post('/catalogList',function(req, res, next){
 });
 router.post('/add',function(req, res, next){
 	var name = req.body.catalog;
-	console.log(name);
 	catalogService.insertUser(name,function(err,data){
 		if(err){
 			res.end('{"err":err}');
@@ -59,8 +58,8 @@ router.post('/search',function(req,res,next){
 });
 router.post('/update',function(req,res,next){
 	 var id = req.body.id;
-	 var name = req.body.name;
-	 if(name === ""){
+	 var name = req.body.catalog;
+	 if(name === "" || name === null){
 	 	   res.end('{"err":"目录名为空"}');
 	 }
 	 catalogService.update(id,name,function(err,data){
@@ -68,14 +67,12 @@ router.post('/update',function(req,res,next){
 	         res.end('{"error":err}');
 	     }else{
 	     	   data = JSON.stringify(data);
-	     	   console.log(data);
 	     	   res.end(data);
 	     }
 	 });
 });
 router.post('/delete',function(req,res,next){
 	var id = req.body.id;
-	console.log(id);
 	catalogService.deleteOne(id,function(err){
 		if(err){
 			res.end('{"error":err}');

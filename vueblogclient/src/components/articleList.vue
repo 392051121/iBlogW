@@ -1,13 +1,11 @@
 <template>
-	<div class="catalogList main">
+	<div class="articleList main">
     <div class="input_box">
-    	    <input v-model="catalog.id" class="" type="hidden"/>
-            <input v-model="catalog.catalog" class="myinput" type="text" placeholder="目录名称" />
-            <!--input v-model="user.password" class="myinput" type="password" placeholder="密码" /-->
-            <button  class="btn" @click="addCatalog"><i class="fa fa-plus" aria-hidden="true"></i>添加</button>
-            <button  class="btn" @click="saveEditCatalog"><i class="fa fa-save" aria-hidden="true"></i>保存</button>
-            <button  class="btn" @click="getCatalogList(1)"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
-            <button style="opacity: 0.8;"  class="btn" @click="emptyCatalog"><i class="fa fa fa-times-circle-o" aria-hidden="true"></i>取消</button>
+    	    <input v-model="article.id" class="" type="hidden"/>
+            <input v-model="article.name" class="myinput" type="text" readonly="readonly" placeholder="文章标题" />
+            <button  class="btn" @click=""><i class="fa fa-plus" aria-hidden="true"></i>添加</button>
+            <button  class="btn" @click=""><i class="fa fa-search" aria-hidden="true"></i>查询</button>
+            <button style="opacity: 0.8;"  class="btn" @click=""><i class="fa fa fa-times-circle-o" aria-hidden="true"></i>取消</button>
         </div>
         <grid 
             :listData="listData"
@@ -32,37 +30,37 @@
     ];
     import grid from './grid.vue'
     export default {
-        name: 'catalogList',
+        name: 'articleList',
         data () {
             return {
                 listData:[],
                 theadData:theadData,
-                catalog:{ //用户信息
+                article:{ //用户信息
                     id:"",
-                    catalog:""
+                    name:""
                 },
-                editCatalogObj:null,  //用于存放正在编辑的用户
+                editArticleObj:null,  //用于存放正在编辑的用户
                 pageInfo:{}
             }
         },
         mounted:function(){
-            this.getCatalogList(1);
+            this.getArticleList(1);
         },
         methods:{
-            getCatalogList(page){
+            getArticleList(page){
                 var _this = this;
-                if(this.catalog.catalog === null){
-                    this.catalog.catalog = "";
+                if(this.article.name === null){
+                    this.article.name = "";
                 }
-                this.$reqs.post('/catalogs/catalogList',{
+                this.$reqs.post('/article/articleList',{
                     page:page,
-                    catalog : this.catalog.catalog
+                    article : this.article.name
                 }).then(function(result){ 
                     //成功
                     if(result.data.success === "err"){
                     	_this.$router.push({path:"/"});
                     }else{
-                    	_this.listData = result.data.catalogList;
+                    	_this.listData = result.data.articleList;
                     	_this.pageInfo.allpage = Math.ceil( result.data.count/5 );
                     }
                 }).catch(function (error) {
@@ -149,8 +147,6 @@
         background: #fff;
         margin-top: 10px;
     }
-    
-    
     .input_box{
         padding: 0 10px;
     }

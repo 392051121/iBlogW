@@ -34,7 +34,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="#">
+                    <router-link to="/backManager/articleList">
                         <i class="fa fa-file-o" aria-hidden="true"></i>
                         <span>文章管理</span>
                     </router-link>

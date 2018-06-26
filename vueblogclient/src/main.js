@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
 
 axios.defaults.withCredentials=true;  //跨域保存session有用
 axios.defaults.baseURL = "http://localhost:3000"; //打包的时候直接删掉，默认基础路径在这里配置
@@ -10,6 +12,7 @@ Vue.prototype.$reqs = axios;
 Vue.prototype.$ajax = axios;
 
 Vue.config.productionTip = false
+Vue.use(iView);
 
 /* eslint-disable no-new */
 new Vue({
