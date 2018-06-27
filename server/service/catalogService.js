@@ -14,15 +14,24 @@ var findOne = function(name, callback) {
 	});
 }
 var findOneById = function(id, callback) {
-	catalogModel.find({
-		'_id': id
-	}, function(err, data) {
-		if(err) {
-			return callback(err);
-		} else {
-			return callback(null, data);
-		}
-	});
+    catalogModel.find({
+        '_id': id
+    }, function(err, data) {
+        if(err) {
+            return callback(err);
+        } else {
+            return callback(null, data);
+        }
+    });
+}
+var findAll = function(callback) {
+    catalogModel.find( function(err, data) {
+        if(err) {
+            return callback(err);
+        } else {
+            return callback(null, data);
+        }
+    });
 }
 var findByPage = function(page,name,callback) {
 	var dataOjb = {
@@ -94,3 +103,4 @@ exports.findByPage = findByPage;
 exports.insertUser = insertUser;
 exports.update = update;
 exports.deleteOne = deleteOne;
+exports.findAll = findAll;

@@ -7,7 +7,7 @@
             <button  class="btn" @click=""><i class="fa fa-search" aria-hidden="true"></i>查询</button>
             <button style="opacity: 0.8;"  class="btn" @click=""><i class="fa fa fa-times-circle-o" aria-hidden="true"></i>取消</button>
         </div>
-        <grid 
+        <grid
             :listData="listData"
             :theadData="theadData"
             :ifEdit="true"
@@ -55,7 +55,7 @@
                 this.$reqs.post('/article/articleList',{
                     page:page,
                     article : this.article.name
-                }).then(function(result){ 
+                }).then(function(result){
                     //成功
                     if(result.data.success === "err"){
                     	_this.$router.push({path:"/"});
@@ -70,7 +70,21 @@
                 });
             },
             addArticle(){
-            	this.$router.push({path:"/backManager/articleAdd"});
+              var _this = this;
+              this.$reqs.post('/articles/createArticle'
+              ).then(function(result){
+                //成功
+                alert(result.data.success);
+                if(result.data.success === "err"){
+                  _this.$router.push({path:"/"});
+                }else if(result.data.success === "success"){
+                  _this.$router.push({path:"/backManager/articleAdd"});
+                }
+              }).catch(function (error) {
+                //失败
+                _this.$router.push({path:"/"});
+                console.log(error);
+              });
             },
             addCatalog(){ //添加用户
                 if(!this.catalog.catalog){
@@ -82,12 +96,12 @@
                     //成功
                     this.emptyCatalog();
                     this.pageInfo.current = this.pageInfo.allpage;
-                    this.getCatalogList(this.pageInfo.allpage);   
+                    this.getCatalogList(this.pageInfo.allpage);
                 }).catch(function (error) {
                     //失败
                     console.log(error);
                 });
-                
+
             },
             editCatalog(item){ //编辑用户
                 this.editCatalogObj = item;
@@ -112,7 +126,7 @@
                 }).catch(function (error) {
                     //失败
                 console.log(error)
-                });     
+                });
             },
             cancelEditAdmin(){
                 this.editCatalogObj = null;
@@ -137,7 +151,7 @@
             gopage(index){
                 this.pageInfo.current = index;
                 //查询数据
-                this.getCatalogList(index) 
+                this.getCatalogList(index)
             }
         },
         components:{grid}

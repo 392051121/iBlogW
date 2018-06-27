@@ -3,6 +3,7 @@ var router = express.Router();
 var catalogService = require('../service/catalogService');
 var check = require('./checkRoute');
 
+
 router.post('/catalogList',function(req,res,next){
 	if (!req.session.user) {
 		res.end('{"success":"err"}');
@@ -28,6 +29,21 @@ router.post('/catalogList',function(req, res, next){
       res.end(str);
 		}
 	});
+});
+router.post('/catalogAll',function(req, res, next){
+    catalogService.findAll(function(err,data){
+        if(err){
+            res.end('{"err":err}');
+        }
+        if(data.length !== 0){
+            var obj = {
+                catalogList:data,
+                success:"true"
+            };
+            var str = JSON.stringify(obj);
+            res.end(str);
+        }
+    });
 });
 router.post('/add',function(req, res, next){
 	var name = req.body.catalog;
