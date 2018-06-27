@@ -3,7 +3,7 @@
     <div class="input_box">
     	    <input v-model="article.id" class="" type="hidden"/>
             <input v-model="article.name" class="myinput" type="text" readonly="readonly" placeholder="文章标题" />
-            <button  class="btn" @click=""><i class="fa fa-plus" aria-hidden="true"></i>添加</button>
+            <button  class="btn" @click="addArticle"><i class="fa fa-plus" aria-hidden="true"></i>添加</button>
             <button  class="btn" @click=""><i class="fa fa-search" aria-hidden="true"></i>查询</button>
             <button style="opacity: 0.8;"  class="btn" @click=""><i class="fa fa fa-times-circle-o" aria-hidden="true"></i>取消</button>
         </div>
@@ -44,7 +44,7 @@
             }
         },
         mounted:function(){
-            this.getArticleList(1);
+            //this.getArticleList(1);
         },
         methods:{
             getArticleList(page){
@@ -68,6 +68,9 @@
                     _this.$router.push({path:"/"});
                     console.log(error);
                 });
+            },
+            addArticle(){
+            	this.$router.push({path:"/backManager/articleAdd"});
             },
             addCatalog(){ //添加用户
                 if(!this.catalog.catalog){

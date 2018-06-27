@@ -63,7 +63,9 @@
 	var pageTitleObj = {
         indexContent:"网站首页",
         userList:"管理员管理",
-        catalogList:"目录管理"
+        catalogList:"目录管理",
+        articleList:"文章管理",
+        articleAdd:"撰写文章"
     };
 	export default {
 		name:'backManager',
@@ -260,6 +262,7 @@
         margin: 5px 5px 0px 90px;
         min-height: 300px;
         min-width: 700px;
+        background: #f8f8f9;
     }
     
     .breadcrumb{

@@ -5,6 +5,7 @@ import backManager from '@/components/backManager'
 import userList from '@/components/userList'
 import catalogList from '@/components/catalogList'
 import articleList from '@/components/articleList'
+import articleAdd from '@/components/articleAdd'
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({
          {
          	    path: 'articleList', 
               component: articleList
+         },
+         {
+         	    path: 'articleAdd', 
+              component: articleAdd
          }
     	]
     }
