@@ -1,6 +1,6 @@
 <template>
   <div class='tinymce'>
-    <editor id='tinymce' v-model='value' :init='init'></editor>
+    <editor id='tinymce' v-model='content' :init='init'></editor>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
   name: 'tinymce',
   data () {
     return {
+    	content:'',
       init: {
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',

@@ -74,7 +74,6 @@
               this.$reqs.post('/articles/createArticle'
               ).then(function(result){
                 //成功
-                alert(result.data.success);
                 if(result.data.success === "err"){
                   _this.$router.push({path:"/"});
                 }else if(result.data.success === "success"){
