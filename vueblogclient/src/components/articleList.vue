@@ -24,8 +24,12 @@
 <script>
 	var theadData = [
         {
-            title:"目录名称",
-            keyname:"catalog"
+            title:"文章名称",
+            keyname:"title"
+        },
+        {
+        	status:"状态",
+        	keyname:"status"
         }
     ];
     import grid from './grid.vue'
@@ -44,7 +48,7 @@
             }
         },
         mounted:function(){
-            //this.getArticleList(1);
+            this.getArticleList(1);
         },
         methods:{
             getArticleList(page){
@@ -52,7 +56,7 @@
                 if(this.article.name === null){
                     this.article.name = "";
                 }
-                this.$reqs.post('/article/articleList',{
+                this.$reqs.post('/articles/articleList',{
                     page:page,
                     article : this.article.name
                 }).then(function(result){

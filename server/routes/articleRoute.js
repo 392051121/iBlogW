@@ -14,7 +14,6 @@ router.post('/saveArticle',function(req,res,next){
     var title = req.body.title;
     var catalog = req.body.catalog;
     var article = req.body.article;
-    console.log(title+catalog+article);
     articleService.insertArticle(title,catalog,article,function(err,data){
     	if(err){
     		res.end('{"err":err}');
@@ -24,5 +23,23 @@ router.post('/saveArticle',function(req,res,next){
     		res.end('{"success":"添加失败"}');
     	}
     });
+});
+router.post('/articleList',function(req, res, next){
+	var page = req.body.page;
+	var name = req.body.article;
+	articleService.findByPage(page,name,function(err,data){
+		if(err){
+			res.end('{"err":err}');
+		}
+		if(data.articleList.length !== 0){
+			var obj = {
+				articleList:data.articleList,
+				count:data.count,
+				success:"true"
+			};
+			var str = JSON.stringify(obj);
+      res.end(str);
+		}
+	});
 });
 module.exports = router;

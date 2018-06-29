@@ -42,6 +42,6 @@ export default {
   mounted:function(){
     tinymce.init({})
   },
-  components: {Editor}
+  components: {'editor':Editor}
 }
 </script>

@@ -8,7 +8,7 @@
         </Select>
       </Col>
       <div class="editor">
-        <editor v-model='content1'></editor>
+        <editor></editor>
       </div>
     </div>
     <div class="btndiv">
@@ -26,7 +26,7 @@
     data() {
       return {
         title: '',
-        content1: '请输入内容',
+        //content1: '请输入内容',
         catalogName: '',
         catalogList: ''
       }
@@ -74,20 +74,21 @@
       },
       saveArticle() {
         var _this = this;
+        var val = tinyMCE.activeEditor.getContent();
         if (_this.title === '') {
           this.$Message.error('标题为空');
         } else if (_this.catalogName === '') {
           this.$Message.error('标签为空');
-        }else if(tinyMCE.activeEditor.getContent() ==='请输入内容'){
+        }else if(val ==='请输入内容'){
          this.$Message.error('内容为空');
         }
         else {
-          var val = tinyMCE.activeEditor.getContent();
+          
           this.$reqs.post(
             '/articles/saveArticle', {title: _this.title, catalog: _this.catalogName, article: val}
           ).then(function (result) {
-            alert(result.data.success);
             if (result.data.success === "添加成功") {
+            	//tinyMCE.activeEditor.setContent("添加成功");
               _this.$router.push({path: "/backManager/articleList"});
             }
           }).catch(function (error) {
