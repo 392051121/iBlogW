@@ -6,6 +6,10 @@ import userList from '@/components/userList'
 import catalogList from '@/components/catalogList'
 import articleList from '@/components/articleList'
 import articleAdd from '@/components/articleAdd'
+import blogFrame from '@/components/BlogFrame'
+import showArticleList from '@/components/showArticleList'
+import oneArticle from '@/components/oneArticle'
+
 
 Vue.use(Router)
 
@@ -13,6 +17,22 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'blogFrame',
+      component: blogFrame,
+      children:[
+          {
+          	path: 'showArticleList',
+            component: showArticleList
+          },
+          {
+         	  path: 'oneArticle',
+         	  name: 'oneArticle',
+         	  component: oneArticle
+          }
+      ]
+    },
+    {
+      path: '/login',
       name: 'login',
       component: login
     },

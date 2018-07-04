@@ -50,6 +50,18 @@ var findByPage = function(page,name,callback) {
 		}
 	});
 }
+var findOne = function(articleId, callback) {
+	articleModel.find({
+		'_id': articleId
+	}, function(err, data) {
+		if(err) {
+			return callback(err);
+		} else {
+			return callback(null, data);
+		}
+	});
+}
 
 exports.insertArticle = insertArticle;
 exports.findByPage = findByPage;
+exports.findOne = findOne;

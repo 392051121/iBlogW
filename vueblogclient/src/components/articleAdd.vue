@@ -36,9 +36,6 @@
       this.getCatalogList();
     },
     methods: {
-      test() {
-        alert(this.value);
-      },
       addArticle() {
         var _this = this;
         this.$reqs.post('/articles/createArticle'

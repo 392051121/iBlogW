@@ -42,4 +42,18 @@ router.post('/articleList',function(req, res, next){
 		}
 	});
 });
+
+router.post('/searchArticle',function(req, res, next){
+	var articleId = req.body.articleId;
+	articleService.findOne(articleId,function(err,data){
+		if(err){
+			res.end('{"err":err}');
+		}
+		if(data.length === 0){
+			res.end('{"err":"未查询到该文章"}');
+		}
+		data = JSON.stringify(data[0]);
+		res.end(data);
+	});
+});
 module.exports = router;
